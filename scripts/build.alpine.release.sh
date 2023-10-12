@@ -2,11 +2,11 @@
 set -xe
 
 apk add gcc g++ build-base linux-headers cmake make autoconf automake libtool python2 python3
-apk add mbedtls-dev mbedtls-static zlib-dev rapidjson-dev libevent-dev libevent-static zlib-static pcre2-dev
+apk add openssl-dev openssl-libs-static zlib-dev rapidjson-dev libevent-dev libevent-static zlib-static pcre2-dev
 
 git clone https://github.com/curl/curl --depth=1 --branch curl-8_4_0
 cd curl
-cmake -DCURL_USE_MBEDTLS=ON -DHTTP_ONLY=ON -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_USE_LIBSSH2=OFF -DBUILD_CURL_EXE=OFF . > /dev/null
+cmake -DCURL_USE_OPENSSL=ON -DHTTP_ONLY=ON -DBUILD_TESTING=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_USE_LIBSSH2=OFF -DBUILD_CURL_EXE=OFF . > /dev/null
 make install -j2 > /dev/null
 cd ..
 
@@ -44,7 +44,7 @@ export PKG_CONFIG_PATH=/usr/lib64/pkgconfig
 cmake -DCMAKE_BUILD_TYPE=Release .
 make -j2
 rm subconverter
-g++ -o base/subconverter $(find CMakeFiles/subconverter.dir/src/ -name "*.o")  -static -lpcre2-8 -levent -lyaml-cpp -L/usr/lib64 -lcurl -lmbedtls -lmbedcrypto -lmbedx509 -lz -l:quickjs/libquickjs.a -llibcron -O3 -s  
+g++ -o base/subconverter $(find CMakeFiles/subconverter.dir/src/ -name "*.o")  -static -lpcre2-8 -levent -lyaml-cpp -L/usr/lib64 -lcurl -lssl -lcrypto -lz -l:quickjs/libquickjs.a -llibcron -O3 -s  
 
 python3 -m ensurepip
 python3 -m pip install gitpython
