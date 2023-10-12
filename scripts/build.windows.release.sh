@@ -38,8 +38,9 @@ cmake -DRAPIDJSON_BUILD_DOC=OFF -DRAPIDJSON_BUILD_EXAMPLES=OFF -DRAPIDJSON_BUILD
 make install -j4
 cd ..
 
-git clone https://github.com/ToruNiina/toml11 --depth=1
+git clone https://github.com/ToruNiina/toml11
 cd toml11
+git reset --hard 1beb391a43168046e8824704320f66d7ea549084
 cmake -DCMAKE_INSTALL_PREFIX="$MINGW_PREFIX" -G "Unix Makefiles" -DCMAKE_CXX_STANDARD=11 .
 make install -j4
 cd ..
